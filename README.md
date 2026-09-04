@@ -1,6 +1,7 @@
 # 1Fi EMI Store – Full Stack EMI Product Catalog
 
 ## Deployed link - https://emi-store-1fi.vercel.app/
+## Demo Link - https://drive.google.com/file/d/1o2C6t3d6GpBShSF5SvL4QCnbvw2dQqaw/view?usp=sharing
 
 ## Overview
 
