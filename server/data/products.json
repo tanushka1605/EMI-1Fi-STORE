@@ -1,0 +1,67 @@
+{
+  "products": [
+    {
+      "slug": "iphone-17-pro",
+      "name": "iPhone 17 Pro",
+      "brand": "Apple",
+      "category": "Smartphones",
+      "badge": "NEW",
+      "badgeColor": "#a855f7",
+      "description": "Titanium. So strong, so light, so Pro. The most advanced iPhone camera system ever.",
+      "accentColor": "#7c3aed",
+      "features": ["A19 Pro Chip", "48MP Camera System", "Titanium Design", "All-day Battery", "ProMotion 120Hz", "USB-C 3.2"],
+      "variants": [
+        { "id": "v1", "name": "256GB Natural Titanium", "color": "#c8beb4", "colorLabel": "Natural Titanium", "storage": "256GB", "mrp": 134900, "price": 127400, "stock": true, "image": "https://images.unsplash.com/photo-1726587912121-ea21fcc57ff8?w=800&h=800&fit=crop&auto=format" },
+        { "id": "v2", "name": "256GB Black Titanium", "color": "#2a2a2a", "colorLabel": "Black Titanium", "storage": "256GB", "mrp": 134900, "price": 127400, "stock": true, "image": "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=800&h=800&fit=crop&auto=format" },
+        { "id": "v3", "name": "512GB Desert Titanium", "color": "#c4956a", "colorLabel": "Desert Titanium", "storage": "512GB", "mrp": 154900, "price": 148400, "stock": true, "image": "https://images.unsplash.com/photo-1512054502232-10a0a035d672?w=800&h=800&fit=crop&auto=format" }
+      ],
+      "emiPlans": {
+        "v1": [{ "id": "e1", "months": 3, "monthly": 44967, "interest": 0, "cashback": 7500, "recommended": false }, { "id": "e2", "months": 6, "monthly": 22483, "interest": 0, "cashback": 7500, "recommended": false }, { "id": "e3", "months": 12, "monthly": 11242, "interest": 0, "cashback": 7500, "recommended": true }, { "id": "e4", "months": 24, "monthly": 5621, "interest": 0, "cashback": 7500, "recommended": false }],
+        "v2": [{ "id": "e5", "months": 3, "monthly": 44967, "interest": 0, "cashback": 7500, "recommended": false }, { "id": "e6", "months": 6, "monthly": 22483, "interest": 0, "cashback": 7500, "recommended": false }, { "id": "e7", "months": 12, "monthly": 11242, "interest": 0, "cashback": 7500, "recommended": true }, { "id": "e8", "months": 24, "monthly": 5621, "interest": 0, "cashback": 7500, "recommended": false }],
+        "v3": [{ "id": "e9", "months": 3, "monthly": 52467, "interest": 0, "cashback": 8500, "recommended": false }, { "id": "e10", "months": 6, "monthly": 26233, "interest": 0, "cashback": 8500, "recommended": false }, { "id": "e11", "months": 12, "monthly": 13117, "interest": 0, "cashback": 8500, "recommended": true }, { "id": "e12", "months": 24, "monthly": 6558, "interest": 0, "cashback": 8500, "recommended": false }]
+      }
+    },
+    {
+      "slug": "samsung-s24-ultra",
+      "name": "Galaxy S24 Ultra",
+      "brand": "Samsung",
+      "category": "Smartphones",
+      "badge": "HOT",
+      "badgeColor": "#f59e0b",
+      "description": "Galaxy AI is here. 200MP pro-grade camera, integrated S Pen, 100x Space Zoom, and all-day battery.",
+      "accentColor": "#3b82f6",
+      "features": ["Snapdragon 8 Gen 3", "200MP Camera", "Integrated S Pen", "5000mAh Battery", "45W Fast Charging", "Galaxy AI"],
+      "variants": [
+        { "id": "sv1", "name": "256GB Titanium Black", "color": "#1a1a1a", "colorLabel": "Titanium Black", "storage": "256GB", "mrp": 139999, "price": 124999, "stock": true, "image": "https://images.unsplash.com/photo-1709744722656-9b850470293f?w=800&h=800&fit=crop&auto=format" },
+        { "id": "sv2", "name": "256GB Titanium Gray", "color": "#6b7280", "colorLabel": "Titanium Gray", "storage": "256GB", "mrp": 139999, "price": 124999, "stock": true, "image": "https://images.unsplash.com/photo-1738830251513-a7bfef4b53c6?w=800&h=800&fit=crop&auto=format" },
+        { "id": "sv3", "name": "512GB Titanium Violet", "color": "#7c3aed", "colorLabel": "Titanium Violet", "storage": "512GB", "mrp": 159999, "price": 144999, "stock": true, "image": "https://images.unsplash.com/photo-1707438095940-1eee18e85400?w=800&h=800&fit=crop&auto=format" }
+      ],
+      "emiPlans": {
+        "sv1": [{ "id": "se1", "months": 3, "monthly": 41666, "interest": 0, "cashback": 6000, "recommended": false }, { "id": "se2", "months": 6, "monthly": 20833, "interest": 0, "cashback": 6000, "recommended": false }, { "id": "se3", "months": 12, "monthly": 10417, "interest": 0, "cashback": 6000, "recommended": true }, { "id": "se4", "months": 24, "monthly": 5208, "interest": 0, "cashback": 6000, "recommended": false }],
+        "sv2": [{ "id": "se5", "months": 3, "monthly": 41666, "interest": 0, "cashback": 6000, "recommended": false }, { "id": "se6", "months": 6, "monthly": 20833, "interest": 0, "cashback": 6000, "recommended": false }, { "id": "se7", "months": 12, "monthly": 10417, "interest": 0, "cashback": 6000, "recommended": true }, { "id": "se8", "months": 24, "monthly": 5208, "interest": 0, "cashback": 6000, "recommended": false }],
+        "sv3": [{ "id": "se9", "months": 3, "monthly": 48333, "interest": 0, "cashback": 7000, "recommended": false }, { "id": "se10", "months": 6, "monthly": 24166, "interest": 0, "cashback": 7000, "recommended": false }, { "id": "se11", "months": 12, "monthly": 12083, "interest": 0, "cashback": 7000, "recommended": true }, { "id": "se12", "months": 24, "monthly": 6041, "interest": 0, "cashback": 7000, "recommended": false }]
+      }
+    },
+    {
+      "slug": "oneplus-12",
+      "name": "OnePlus 12",
+      "brand": "OnePlus",
+      "category": "Smartphones",
+      "badge": "DEAL",
+      "badgeColor": "#ef4444",
+      "description": "Engineered to be extraordinary. Snapdragon 8 Gen 3, Hasselblad camera tuning, and 100W SUPERVOOC charging.",
+      "accentColor": "#ef4444",
+      "features": ["Snapdragon 8 Gen 3", "Hasselblad Cameras", "100W SUPERVOOC", "5400mAh Battery", "120Hz AMOLED", "OxygenOS 14"],
+      "variants": [
+        { "id": "ov1", "name": "256GB Silky Black", "color": "#111111", "colorLabel": "Silky Black", "storage": "256GB", "mrp": 74999, "price": 64999, "stock": true, "image": "https://images.unsplash.com/photo-1673718424704-51d0d2ca1fd2?w=800&h=800&fit=crop&auto=format" },
+        { "id": "ov2", "name": "256GB Flowy Emerald", "color": "#065f46", "colorLabel": "Flowy Emerald", "storage": "256GB", "mrp": 74999, "price": 64999, "stock": true, "image": "https://images.unsplash.com/photo-1673718424091-5fb734062c05?w=800&h=800&fit=crop&auto=format" },
+        { "id": "ov3", "name": "512GB Silky Black", "color": "#1a1a1a", "colorLabel": "Silky Black", "storage": "512GB", "mrp": 84999, "price": 74999, "stock": true, "image": "https://images.unsplash.com/photo-1757847505239-ce2fb51da67d?w=800&h=800&fit=crop&auto=format" }
+      ],
+      "emiPlans": {
+        "ov1": [{ "id": "oe1", "months": 3, "monthly": 21666, "interest": 0, "cashback": 3000, "recommended": false }, { "id": "oe2", "months": 6, "monthly": 10833, "interest": 0, "cashback": 3000, "recommended": false }, { "id": "oe3", "months": 12, "monthly": 5416, "interest": 0, "cashback": 3000, "recommended": true }, { "id": "oe4", "months": 24, "monthly": 2708, "interest": 0, "cashback": 3000, "recommended": false }],
+        "ov2": [{ "id": "oe5", "months": 3, "monthly": 21666, "interest": 0, "cashback": 3000, "recommended": false }, { "id": "oe6", "months": 6, "monthly": 10833, "interest": 0, "cashback": 3000, "recommended": false }, { "id": "oe7", "months": 12, "monthly": 5416, "interest": 0, "cashback": 3000, "recommended": true }, { "id": "oe8", "months": 24, "monthly": 2708, "interest": 0, "cashback": 3000, "recommended": false }],
+        "ov3": [{ "id": "oe9", "months": 3, "monthly": 24999, "interest": 0, "cashback": 4000, "recommended": false }, { "id": "oe10", "months": 6, "monthly": 12499, "interest": 0, "cashback": 4000, "recommended": false }, { "id": "oe11", "months": 12, "monthly": 6249, "interest": 0, "cashback": 4000, "recommended": true }, { "id": "oe12", "months": 24, "monthly": 3124, "interest": 0, "cashback": 4000, "recommended": false }]
+      }
+    }
+  ]
+}

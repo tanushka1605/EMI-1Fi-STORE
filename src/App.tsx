@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect, useMemo } from "react";
+import { createContext, useContext, useState, useRef, useCallback, useEffect, useMemo } from "react";
 
 // ─────────────────────────── IMAGES ───────────────────────────────────────────
 const IMG = {
@@ -28,57 +28,8 @@ interface Variant  { id:string; name:string; color:string; colorLabel:string; st
 interface SpecSection { section:string; rows:[string,string][]; }
 interface Product  { slug:string; name:string; brand:string; category:string; badge:string; badgeColor:string; description:string; accentColor:string; features:string[]; variants:Variant[]; emiPlans:Record<string,EmiPlan[]>; specs?:SpecSection[]; }
 
-// ─────────────────────────── DATA ─────────────────────────────────────────────
-const PRODUCTS: Product[] = [
-  {
-    slug:"iphone-17-pro", name:"iPhone 17 Pro", brand:"Apple", category:"Smartphones",
-    badge:"NEW", badgeColor:"#a855f7", accentColor:"#7c3aed",
-    description:"Titanium. So strong, so light, so Pro. The most advanced iPhone camera system ever. A19 Pro chip — the fastest chip ever in a smartphone, with a massive leap in battery life.",
-    features:["A19 Pro Chip","48MP Camera System","Titanium Design","All-day Battery","ProMotion 120Hz","USB-C 3.2"],
-    variants:[
-      {id:"v1",name:"256GB Natural Titanium",color:"#c8beb4",colorLabel:"Natural Titanium",storage:"256GB",mrp:134900,price:127400,stock:true,image:IMG.iphone1},
-      {id:"v2",name:"256GB Black Titanium",color:"#2a2a2a",colorLabel:"Black Titanium",storage:"256GB",mrp:134900,price:127400,stock:true,image:IMG.iphone2},
-      {id:"v3",name:"512GB Desert Titanium",color:"#c4956a",colorLabel:"Desert Titanium",storage:"512GB",mrp:154900,price:148400,stock:true,image:IMG.iphone3},
-    ],
-    emiPlans:{
-      v1:[{id:"e1",months:3,monthly:44967,interest:0,cashback:7500,recommended:false},{id:"e2",months:6,monthly:22483,interest:0,cashback:7500,recommended:false},{id:"e3",months:12,monthly:11242,interest:0,cashback:7500,recommended:true},{id:"e4",months:24,monthly:5621,interest:0,cashback:7500,recommended:false},{id:"e5",months:36,monthly:4297,interest:10.5,cashback:7500,recommended:false},{id:"e6",months:48,monthly:3385,interest:10.5,cashback:7500,recommended:false},{id:"e7",months:60,monthly:2842,interest:10.5,cashback:7500,recommended:false}],
-      v2:[{id:"e8",months:3,monthly:44967,interest:0,cashback:7500,recommended:false},{id:"e9",months:6,monthly:22483,interest:0,cashback:7500,recommended:false},{id:"e10",months:12,monthly:11242,interest:0,cashback:7500,recommended:true},{id:"e11",months:24,monthly:5621,interest:0,cashback:7500,recommended:false},{id:"e12",months:36,monthly:4297,interest:10.5,cashback:7500,recommended:false},{id:"e13",months:48,monthly:3385,interest:10.5,cashback:7500,recommended:false},{id:"e14",months:60,monthly:2842,interest:10.5,cashback:7500,recommended:false}],
-      v3:[{id:"e15",months:3,monthly:52467,interest:0,cashback:8500,recommended:false},{id:"e16",months:6,monthly:26233,interest:0,cashback:8500,recommended:false},{id:"e17",months:12,monthly:13117,interest:0,cashback:8500,recommended:true},{id:"e18",months:24,monthly:6558,interest:0,cashback:8500,recommended:false},{id:"e19",months:36,monthly:5016,interest:10.5,cashback:8500,recommended:false},{id:"e20",months:48,monthly:3951,interest:10.5,cashback:8500,recommended:false},{id:"e21",months:60,monthly:3318,interest:10.5,cashback:8500,recommended:false}],
-    },
-  },
-  {
-    slug:"samsung-s24-ultra", name:"Galaxy S24 Ultra", brand:"Samsung", category:"Smartphones",
-    badge:"HOT", badgeColor:"#f59e0b", accentColor:"#3b82f6",
-    description:"Galaxy AI is here. 200MP pro-grade camera, integrated S Pen, 100x Space Zoom, and all-day battery. The most capable Galaxy ever, built for those who demand the best.",
-    features:["Snapdragon 8 Gen 3","200MP Camera","Integrated S Pen","5000mAh Battery","45W Fast Charging","Galaxy AI"],
-    variants:[
-      {id:"sv1",name:"256GB Titanium Black",color:"#1a1a1a",colorLabel:"Titanium Black",storage:"256GB",mrp:139999,price:124999,stock:true,image:IMG.samsung1},
-      {id:"sv2",name:"256GB Titanium Gray",color:"#6b7280",colorLabel:"Titanium Gray",storage:"256GB",mrp:139999,price:124999,stock:true,image:IMG.samsung2},
-      {id:"sv3",name:"512GB Titanium Violet",color:"#7c3aed",colorLabel:"Titanium Violet",storage:"512GB",mrp:159999,price:144999,stock:true,image:IMG.samsung3},
-    ],
-    emiPlans:{
-      sv1:[{id:"se1",months:3,monthly:41666,interest:0,cashback:6000,recommended:false},{id:"se2",months:6,monthly:20833,interest:0,cashback:6000,recommended:false},{id:"se3",months:12,monthly:10417,interest:0,cashback:6000,recommended:true},{id:"se4",months:24,monthly:5208,interest:0,cashback:6000,recommended:false},{id:"se5",months:36,monthly:4046,interest:10.5,cashback:0,recommended:false},{id:"se6",months:48,monthly:3186,interest:10.5,cashback:0,recommended:false},{id:"se7",months:60,monthly:2674,interest:10.5,cashback:0,recommended:false}],
-      sv2:[{id:"se8",months:3,monthly:41666,interest:0,cashback:6000,recommended:false},{id:"se9",months:6,monthly:20833,interest:0,cashback:6000,recommended:false},{id:"se10",months:12,monthly:10417,interest:0,cashback:6000,recommended:true},{id:"se11",months:24,monthly:5208,interest:0,cashback:6000,recommended:false},{id:"se12",months:36,monthly:4046,interest:10.5,cashback:0,recommended:false},{id:"se13",months:48,monthly:3186,interest:10.5,cashback:0,recommended:false},{id:"se14",months:60,monthly:2674,interest:10.5,cashback:0,recommended:false}],
-      sv3:[{id:"se15",months:3,monthly:48333,interest:0,cashback:7000,recommended:false},{id:"se16",months:6,monthly:24166,interest:0,cashback:7000,recommended:false},{id:"se17",months:12,monthly:12083,interest:0,cashback:7000,recommended:true},{id:"se18",months:24,monthly:6041,interest:0,cashback:7000,recommended:false},{id:"se19",months:36,monthly:4699,interest:10.5,cashback:0,recommended:false},{id:"se20",months:48,monthly:3700,interest:10.5,cashback:0,recommended:false},{id:"se21",months:60,monthly:3107,interest:10.5,cashback:0,recommended:false}],
-    },
-  },
-  {
-    slug:"oneplus-12", name:"OnePlus 12", brand:"OnePlus", category:"Smartphones",
-    badge:"DEAL", badgeColor:"#ef4444", accentColor:"#ef4444",
-    description:"Engineered to be extraordinary. Snapdragon 8 Gen 3, Hasselblad camera tuning, 100W SUPERVOOC charging from 0–100% in 26 minutes. Best performance per rupee.",
-    features:["Snapdragon 8 Gen 3","Hasselblad Cameras","100W SUPERVOOC","5400mAh Battery","120Hz AMOLED","OxygenOS 14"],
-    variants:[
-      {id:"ov1",name:"256GB Silky Black",color:"#111111",colorLabel:"Silky Black",storage:"256GB",mrp:74999,price:64999,stock:true,image:IMG.oneplus1},
-      {id:"ov2",name:"256GB Flowy Emerald",color:"#065f46",colorLabel:"Flowy Emerald",storage:"256GB",mrp:74999,price:64999,stock:true,image:IMG.oneplus2},
-      {id:"ov3",name:"512GB Silky Black",color:"#1a1a1a",colorLabel:"Silky Black",storage:"512GB",mrp:84999,price:74999,stock:true,image:IMG.oneplus3},
-    ],
-    emiPlans:{
-      ov1:[{id:"oe1",months:3,monthly:21666,interest:0,cashback:3000,recommended:false},{id:"oe2",months:6,monthly:10833,interest:0,cashback:3000,recommended:false},{id:"oe3",months:12,monthly:5416,interest:0,cashback:3000,recommended:true},{id:"oe4",months:24,monthly:2708,interest:0,cashback:3000,recommended:false},{id:"oe5",months:36,monthly:2106,interest:10.5,cashback:0,recommended:false},{id:"oe6",months:48,monthly:1659,interest:10.5,cashback:0,recommended:false}],
-      ov2:[{id:"oe7",months:3,monthly:21666,interest:0,cashback:3000,recommended:false},{id:"oe8",months:6,monthly:10833,interest:0,cashback:3000,recommended:false},{id:"oe9",months:12,monthly:5416,interest:0,cashback:3000,recommended:true},{id:"oe10",months:24,monthly:2708,interest:0,cashback:3000,recommended:false},{id:"oe11",months:36,monthly:2106,interest:10.5,cashback:0,recommended:false},{id:"oe12",months:48,monthly:1659,interest:10.5,cashback:0,recommended:false}],
-      ov3:[{id:"oe13",months:3,monthly:24999,interest:0,cashback:4000,recommended:false},{id:"oe14",months:6,monthly:12499,interest:0,cashback:4000,recommended:false},{id:"oe15",months:12,monthly:6249,interest:0,cashback:4000,recommended:true},{id:"oe16",months:24,monthly:3124,interest:0,cashback:4000,recommended:false},{id:"oe17",months:36,monthly:2429,interest:10.5,cashback:0,recommended:false},{id:"oe18",months:48,monthly:1912,interest:10.5,cashback:0,recommended:false}],
-    },
-  },
-];
+const ProductsContext = createContext<Product[]>([]);
+const useProducts = () => useContext(ProductsContext);
 
 // ─────────────────────────── UTILS ────────────────────────────────────────────
 // Font helpers applied via className
@@ -423,6 +374,7 @@ function ProductCard({ product, onView }: { product:Product; onView:()=>void }) 
 
 // ─────────────────────────── HOME PAGE ────────────────────────────────────────
 function HomePage({ navigate }: { navigate:(p:PageType,slug?:string)=>void }) {
+  const products = useProducts();
   const heroRef = useRef<HTMLDivElement>(null);
   const [activeFeature, setActiveFeature] = useState(0);
   useEffect(()=>{
@@ -479,7 +431,7 @@ function HomePage({ navigate }: { navigate:(p:PageType,slug?:string)=>void }) {
               </div>
             </div>
             <div className="hidden lg:block lg:col-span-2 relative h-[500px]">
-              {PRODUCTS.map((p,i)=>(
+              {products.map((p,i)=>(
                 <div key={p.slug} onClick={()=>navigate("product",p.slug)}
                   className="absolute rounded-2xl overflow-hidden cursor-pointer hover:z-20 transition-all duration-500 hover:scale-110"
                   style={{ width:175, height:215, top:i===0?"0%":i===1?"38%":"14%", left:i===0?"2%":i===1?"32%":"64%", animation:`float ${7+i*1.5}s ease-in-out ${i*1.2}s infinite`, border:"1px solid rgba(255,255,255,0.15)", boxShadow:"0 24px 64px rgba(0,0,0,0.35)", transform:`rotate(${[-5,3,-2][i]}deg)` }}>
@@ -544,7 +496,7 @@ function HomePage({ navigate }: { navigate:(p:PageType,slug?:string)=>void }) {
           <button onClick={()=>navigate("products")} className="font-mono text-xs uppercase tracking-widest transition-colors" style={{ color:"var(--text3)" }}>View All Products →</button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PRODUCTS.map(p=><ProductCard key={p.slug} product={p} onView={()=>navigate("product",p.slug)}/>)}
+          {products.map(p=><ProductCard key={p.slug} product={p} onView={()=>navigate("product",p.slug)}/>)}
         </div>
       </div>
 
@@ -567,10 +519,11 @@ function HomePage({ navigate }: { navigate:(p:PageType,slug?:string)=>void }) {
 
 // ─────────────────────────── PRODUCTS PAGE ────────────────────────────────────
 function ProductsPage({ navigate }: { navigate:(p:PageType,slug?:string)=>void }) {
+  const products = useProducts();
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("featured");
   const [brand, setBrand] = useState("all");
-  const filtered = PRODUCTS.filter(p=>(brand==="all"||p.brand.toLowerCase()===brand)&&(p.name.toLowerCase().includes(search.toLowerCase())||p.brand.toLowerCase().includes(search.toLowerCase()))).sort((a,b)=>sort==="low"?a.variants[0].price-b.variants[0].price:sort==="high"?b.variants[0].price-a.variants[0].price:0);
+  const filtered = products.filter(p=>(brand==="all"||p.brand.toLowerCase()===brand)&&(p.name.toLowerCase().includes(search.toLowerCase())||p.brand.toLowerCase().includes(search.toLowerCase()))).sort((a,b)=>sort==="low"?a.variants[0].price-b.variants[0].price:sort==="high"?b.variants[0].price-a.variants[0].price:0);
   return (
     <div style={{ background:"var(--bg)", minHeight:"100vh", transition:"background 0.35s ease" }}>
       <BgOrbs/>
@@ -581,7 +534,7 @@ function ProductsPage({ navigate }: { navigate:(p:PageType,slug?:string)=>void }
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-5">
             <p className="font-mono text-xs uppercase tracking-widest mb-4" style={{ color:"var(--accent2)" }}>Full Catalog</p>
             <h1 className="font-display font-light mb-4" style={{ fontSize:"clamp(48px,8vw,88px)", color:"var(--text)" }}>All Products</h1>
-            <p className="text-lg max-w-lg" style={{ color:"var(--text2)" }}>{PRODUCTS.length} premium smartphones · Zero-interest EMI · Instant approval</p>
+            <p className="text-lg max-w-lg" style={{ color:"var(--text2)" }}>{products.length} premium smartphones · Zero-interest EMI · Instant approval</p>
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-5 md:px-10">
@@ -614,7 +567,7 @@ function ProductsPage({ navigate }: { navigate:(p:PageType,slug?:string)=>void }
             <div className="rounded-2xl overflow-hidden" style={{ background:"var(--surface)", border:"1px solid var(--border)" }}>
               <div className="grid grid-cols-4 border-b" style={{ borderColor:"var(--border)" }}>
                 <div className="p-4 border-r" style={{ borderColor:"var(--border)" }}/>
-                {PRODUCTS.map(p=>(
+                {products.map(p=>(
                   <div key={p.slug} className="p-4 text-center border-r last:border-0" style={{ borderColor:"var(--border)" }}>
                     <div className="w-14 h-14 rounded-xl overflow-hidden mx-auto mb-2"><Img src={p.variants[0].image} alt={p.name} className="w-full h-full"/></div>
                     <p className="font-display text-sm font-light" style={{ color:"var(--text)" }}>{p.name}</p>
@@ -622,11 +575,11 @@ function ProductsPage({ navigate }: { navigate:(p:PageType,slug?:string)=>void }
                 ))}
               </div>
               {[
-                {label:"Starting Price",vals:PRODUCTS.map(p=>fmt(p.variants[0].price))},
-                {label:"Best EMI",vals:PRODUCTS.map(p=>fmt(p.emiPlans[p.variants[0].id].find(x=>x.recommended)?.monthly||0)+"/mo")},
-                {label:"Max Cashback",vals:PRODUCTS.map(p=>fmt(Math.max(...p.emiPlans[p.variants[0].id].map(x=>x.cashback))))},
-                {label:"0% Tenure",vals:PRODUCTS.map(p=>"Up to "+Math.max(...p.emiPlans[p.variants[0].id].filter(x=>x.interest===0).map(x=>x.months))+"mo")},
-                {label:"Variants",vals:PRODUCTS.map(p=>p.variants.length+" options")},
+                {label:"Starting Price",vals:products.map(p=>fmt(p.variants[0].price))},
+                {label:"Best EMI",vals:products.map(p=>fmt(p.emiPlans[p.variants[0].id].find(x=>x.recommended)?.monthly||0)+"/mo")},
+                {label:"Max Cashback",vals:products.map(p=>fmt(Math.max(...p.emiPlans[p.variants[0].id].map(x=>x.cashback))))},
+                {label:"0% Tenure",vals:products.map(p=>"Up to "+Math.max(...p.emiPlans[p.variants[0].id].filter(x=>x.interest===0).map(x=>x.months))+"mo")},
+                {label:"Variants",vals:products.map(p=>p.variants.length+" options")},
               ].map(row=>(
                 <div key={row.label} className="grid grid-cols-4 border-b last:border-0" style={{ borderColor:"var(--border)" }}>
                   <div className="p-4 border-r" style={{ borderColor:"var(--border)" }}><p className="font-mono text-xs" style={{ color:"var(--text3)" }}>{row.label}</p></div>
@@ -917,7 +870,9 @@ function ProductReviews({ product }: { product:Product }) {
 
 // ─────────────────────────── PRODUCT DETAIL PAGE ──────────────────────────────
 function ProductDetailPage({ slug, navigate, onPay }: { slug:string; navigate:(p:PageType,slug?:string)=>void; onPay:(s:PaymentState)=>void }) {
-  const product = PRODUCTS.find(p=>p.slug===slug)!;
+  const products = useProducts();
+  const product = products.find(p=>p.slug===slug);
+  if(!product) return <div className="relative z-10 pt-32 pb-40 text-center" style={{ color:"var(--text2)" }}>Product not found.</div>;
   const [activeVid, setActiveVid] = useState(product.variants[0].id);
   const [selectedPlanId, setSelectedPlanId] = useState<string|null>(null);
   const [toast, setToast] = useState<{plan:EmiPlan;variant:Variant}|null>(null);
@@ -1153,7 +1108,7 @@ function ProductDetailPage({ slug, navigate, onPay }: { slug:string; navigate:(p
               <div><p className="font-mono text-xs uppercase tracking-widest mb-2" style={{ color:"var(--text3)" }}>You may also like</p><h3 className="font-display text-4xl font-light" style={{ color:"var(--text)" }}>More Products</h3></div>
               <button onClick={()=>navigate("products")} className="font-mono text-xs uppercase tracking-widest transition-colors" style={{ color:"var(--text3)" }}>View All →</button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">{PRODUCTS.filter(p=>p.slug!==slug).map(p=><ProductCard key={p.slug} product={p} onView={()=>navigate("product",p.slug)}/>)}</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">{products.filter(p=>p.slug!==slug).map(p=><ProductCard key={p.slug} product={p} onView={()=>navigate("product",p.slug)}/>)}</div>
           </div>
         </div>
       </div>
@@ -1688,40 +1643,80 @@ function PaymentPage({ state, navigate }: { state: PaymentState; navigate:(p:Pag
 }
 
 // ─────────────────────────── APP ──────────────────────────────────────────────
+function routeFromPath(pathname:string): { page:PageType; slug:string } {
+  const parts = pathname.split("/").filter(Boolean);
+  if(parts[0]==="products"&&parts[1]) return { page:"product", slug:decodeURIComponent(parts[1]) };
+  if(parts[0]==="products") return { page:"products", slug:"" };
+  if(parts[0]==="how-it-works"||parts[0]==="support") return { page:parts[0], slug:"" };
+  if(parts[0]==="payment") return { page:"payment", slug:"" };
+  return { page:"home", slug:"" };
+}
+
 export default function App() {
   const [isDark, setIsDark] = useState(true);
-  const [page, setPage] = useState<PageType>("home");
-  const [productSlug, setProductSlug] = useState("");
+  const initialRoute = routeFromPath(window.location.pathname);
+  const [page, setPage] = useState<PageType>(initialRoute.page);
+  const [productSlug, setProductSlug] = useState(initialRoute.slug);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [catalogError, setCatalogError] = useState("");
   const [paymentState, setPaymentState] = useState<PaymentState|null>(null);
 
   useEffect(() => {
     document.documentElement.classList.toggle("light", !isDark);
   }, [isDark]);
 
+  useEffect(() => {
+    fetch("/api/products")
+      .then(response => {
+        if(!response.ok) throw new Error("Catalog request failed");
+        return response.json() as Promise<Product[]>;
+      })
+      .then(setProducts)
+      .catch(() => setCatalogError("The product catalog is unavailable. Start the API with pnpm api."));
+  }, []);
+
+  useEffect(() => {
+    const onPopState = () => {
+      const route = routeFromPath(window.location.pathname);
+      setPage(route.page);
+      setProductSlug(route.slug);
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
   const navigate = useCallback((p: PageType, slug?: string) => {
     setPage(p);
     if (slug) setProductSlug(slug);
+    const path = p==="product"&&slug ? `/products/${encodeURIComponent(slug)}` : p==="home" ? "/" : `/${p}`;
+    window.history.pushState({}, "", path);
     window.scrollTo({ top:0, behavior:"smooth" });
   }, []);
 
   const handlePay = useCallback((state: PaymentState) => {
     setPaymentState(state);
     setPage("payment");
+    window.history.pushState({}, "", "/payment");
     window.scrollTo({ top:0, behavior:"smooth" });
   }, []);
 
+  if(catalogError) return <div className="min-h-screen flex items-center justify-center px-6 text-center" style={{ background:"var(--bg)", color:"var(--text2)" }}>{catalogError}</div>;
+  if(!products.length) return <div className="min-h-screen flex items-center justify-center px-6 text-center font-mono text-sm" style={{ background:"var(--bg)", color:"var(--text3)" }}>Loading product catalog...</div>;
+
   return (
-    <div style={{ minHeight:"100vh", background:"var(--bg)", transition:"background 0.35s ease" }}>
-      <Nav page={page} isDark={isDark} toggleTheme={()=>setIsDark(d=>!d)} navigate={navigate}/>
-      <div key={page==="product"?productSlug:page==="payment"?"payment":page} style={{ animation:"pageIn 0.4s ease-out" }}>
-        {page==="home"         && <HomePage navigate={navigate}/>}
-        {page==="products"     && <ProductsPage navigate={navigate}/>}
-        {page==="how-it-works" && <HowItWorksPage navigate={navigate}/>}
-        {page==="support"      && <SupportPage navigate={navigate}/>}
-        {page==="product" && productSlug && <ProductDetailPage slug={productSlug} navigate={navigate} onPay={handlePay}/>}
-        {page==="payment" && paymentState && <PaymentPage state={paymentState} navigate={navigate}/>}
+    <ProductsContext.Provider value={products}>
+      <div style={{ minHeight:"100vh", background:"var(--bg)", transition:"background 0.35s ease" }}>
+        <Nav page={page} isDark={isDark} toggleTheme={()=>setIsDark(d=>!d)} navigate={navigate}/>
+        <div key={page==="product"?productSlug:page==="payment"?"payment":page} style={{ animation:"pageIn 0.4s ease-out" }}>
+          {page==="home"         && <HomePage navigate={navigate}/>} 
+          {page==="products"     && <ProductsPage navigate={navigate}/>} 
+          {page==="how-it-works" && <HowItWorksPage navigate={navigate}/>} 
+          {page==="support"      && <SupportPage navigate={navigate}/>} 
+          {page==="product" && productSlug && <ProductDetailPage slug={productSlug} navigate={navigate} onPay={handlePay}/>} 
+          {page==="payment" && paymentState && <PaymentPage state={paymentState} navigate={navigate}/>} 
+        </div>
+        <Footer navigate={navigate}/>
       </div>
-      <Footer navigate={navigate}/>
-    </div>
+    </ProductsContext.Provider>
   );
 }
