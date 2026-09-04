@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
+@import 'tailwindcss';
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+* { box-sizing: border-box; }
+
+/* ── DARK theme (default) ── */
+:root {
+  --bg:        #07070f;
+  --bg2:       #0f0f1e;
+  --surface:   rgba(255,255,255,0.04);
+  --surface2:  rgba(255,255,255,0.07);
+  --border:    rgba(255,255,255,0.08);
+  --border2:   rgba(255,255,255,0.14);
+  --text:      #e8e6f0;
+  --text2:     rgba(255,255,255,0.55);
+  --text3:     rgba(255,255,255,0.28);
+  --text4:     rgba(255,255,255,0.14);
+  --accent:    #7c3aed;
+  --accent2:   #a855f7;
+  --accentBg:  rgba(124,58,237,0.14);
+  --accentBd:  rgba(124,58,237,0.38);
+  --green:     #10b981;
+  --greenBg:   rgba(16,185,129,0.14);
+  --greenBd:   rgba(16,185,129,0.35);
+  --red:       #ef4444;
+  --redBg:     rgba(239,68,68,0.15);
+  --redBd:     rgba(239,68,68,0.3);
+  --navBg:     rgba(7,7,15,0.93);
+  --gridLine:  rgba(124,58,237,0.038);
+  --orb1:      rgba(124,58,237,0.18);
+  --orb2:      rgba(59,130,246,0.12);
+  --orb3:      rgba(16,185,129,0.1);
+  --cardHover: rgba(124,58,237,0.1);
+  --shadow:    rgba(0,0,0,0.5);
+  --imgOverlay: rgba(7,7,15,0.88);
+  --heroOverlay: linear-gradient(to bottom, rgba(7,7,15,0.45) 0%, rgba(7,7,15,0.75) 60%, #07070f 100%);
+  --footerBg:  rgba(7,7,15,1);
+  --scheme:    dark;
+}
+
+/* ── LIGHT theme ── */
+:root.light {
+  --bg:        #f5f4f8;
+  --bg2:       #ffffff;
+  --surface:   rgba(0,0,0,0.04);
+  --surface2:  rgba(0,0,0,0.07);
+  --border:    rgba(0,0,0,0.08);
+  --border2:   rgba(0,0,0,0.14);
+  --text:      #1a1730;
+  --text2:     rgba(20,16,50,0.6);
+  --text3:     rgba(20,16,50,0.38);
+  --text4:     rgba(20,16,50,0.18);
+  --accent:    #6d28d9;
+  --accent2:   #7c3aed;
+  --accentBg:  rgba(109,40,217,0.1);
+  --accentBd:  rgba(109,40,217,0.32);
+  --green:     #059669;
+  --greenBg:   rgba(5,150,105,0.1);
+  --greenBd:   rgba(5,150,105,0.3);
+  --red:       #dc2626;
+  --redBg:     rgba(220,38,38,0.1);
+  --redBd:     rgba(220,38,38,0.25);
+  --navBg:     rgba(245,244,248,0.93);
+  --gridLine:  rgba(109,40,217,0.05);
+  --orb1:      rgba(124,58,237,0.1);
+  --orb2:      rgba(59,130,246,0.08);
+  --orb3:      rgba(16,185,129,0.07);
+  --cardHover: rgba(109,40,217,0.06);
+  --shadow:    rgba(20,16,50,0.12);
+  --imgOverlay: rgba(245,244,248,0.85);
+  --heroOverlay: linear-gradient(to bottom, rgba(245,244,248,0.35) 0%, rgba(245,244,248,0.72) 60%, #f5f4f8 100%);
+  --footerBg:  #eeedf3;
+  --scheme:    light;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Nunito', system-ui, sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* Font utility classes */
+.font-display { font-family: 'Comfortaa', system-ui, sans-serif !important; }
+.font-mono    { font-family: 'Courier Prime', 'Courier New', monospace !important; }
+
+/* Native select / option theming */
+select {
+  color-scheme: dark;
+  background-color: var(--bg2);
+  color: var(--text);
+}
+:root.light select {
+  color-scheme: light;
+  background-color: var(--bg2);
+  color: var(--text);
+}
+option {
+  background-color: var(--bg2);
+  color: var(--text);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--accentBd); border-radius: 2px; }
+
+/* ── Keyframes ── */
+@keyframes float {
+  0%,100% { transform: translateY(0px) rotate(var(--rot,0deg)); }
+  33%     { transform: translateY(-14px) rotate(var(--rot,0deg)); }
+  66%     { transform: translateY(-7px) rotate(var(--rot,0deg)); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes pageIn {
+  from { opacity:0; transform:translateY(14px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes slideUp {
+  from { opacity:0; transform:translateY(24px) scale(0.95); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+@keyframes logoFloat {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-3px); }
+}
+@keyframes pulse-glow {
+  0%,100% { opacity:0.6; }
+  50%     { opacity:1; }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes burst {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  100% { transform: scale(2.8); opacity: 0; }
+}

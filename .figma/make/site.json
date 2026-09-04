@@ -1,0 +1,10 @@
+{
+  "description": "Creates engaging 3D interactive websites that enhance user experience and captivate visitors with creative, immersive web designs.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
