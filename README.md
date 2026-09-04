@@ -422,6 +422,3 @@ B.Tech – Artificial Intelligence & Machine Learning
 ITM University, Gwalior
 
 GitHub: https://github.com/tanushka1605
-
-Repository:
-https://github.com/tanushka1605/EMI-Store-1Fi
