@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useRef, useCallback, useEffect, useMemo } from "react";
+import catalogSeed from "../server/data/products.json";
 
 // ─────────────────────────── IMAGES ───────────────────────────────────────────
 const IMG = {
@@ -27,6 +28,8 @@ interface EmiPlan { id:string; months:number; monthly:number; interest:number; c
 interface Variant  { id:string; name:string; color:string; colorLabel:string; storage:string; mrp:number; price:number; stock:boolean; image:string; }
 interface SpecSection { section:string; rows:[string,string][]; }
 interface Product  { slug:string; name:string; brand:string; category:string; badge:string; badgeColor:string; description:string; accentColor:string; features:string[]; variants:Variant[]; emiPlans:Record<string,EmiPlan[]>; specs?:SpecSection[]; }
+
+const FALLBACK_PRODUCTS = catalogSeed.products as Product[];
 
 const ProductsContext = createContext<Product[]>([]);
 const useProducts = () => useContext(ProductsContext);
@@ -1673,7 +1676,7 @@ export default function App() {
         return response.json() as Promise<Product[]>;
       })
       .then(setProducts)
-      .catch(() => setCatalogError("The product catalog is unavailable. Start the API with pnpm api."));
+      .catch(() => setProducts(FALLBACK_PRODUCTS));
   }, []);
 
   useEffect(() => {
