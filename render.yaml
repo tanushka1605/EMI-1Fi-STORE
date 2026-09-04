@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: emi-store-api
+    runtime: node
+    buildCommand: pnpm install --frozen-lockfile
+    startCommand: pnpm api
+    envVars:
+      - key: API_PORT
+        value: 10000

@@ -1666,7 +1666,8 @@ export default function App() {
   }, [isDark]);
 
   useEffect(() => {
-    fetch("/api/products")
+    const apiBaseUrl = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+    fetch(`${apiBaseUrl}/api/products`)
       .then(response => {
         if(!response.ok) throw new Error("Catalog request failed");
         return response.json() as Promise<Product[]>;
